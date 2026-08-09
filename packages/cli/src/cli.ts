@@ -14,10 +14,12 @@ import { runCommand } from './commands/run.js';
 import { installToolchain, printToolchain } from './commands/toolchain.js';
 import { scaffoldProject } from './init/scaffold.js';
 
+declare const MOBILEPROOF_VERSION: string;
+
 const program = new Command()
   .name('mobileproof')
   .description('Auditable local verification for React Native applications')
-  .version('0.1.0')
+  .version(MOBILEPROOF_VERSION)
   .showSuggestionAfterError();
 
 program.command('init')

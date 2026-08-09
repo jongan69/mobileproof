@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Safe readiness markers and stable identifiers for MobileProof",
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/jongan69/mobileproof.git" },
+  "repository": { "type": "git", "url": "git+https://github.com/jongan69/mobileproof.git" },
   "publishConfig": { "access": "public", "provenance": true },
   "type": "module",
   "main": "./dist/index.cjs",
