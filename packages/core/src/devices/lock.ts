@@ -20,7 +20,7 @@ export async function acquireDeviceLock(deviceId: string, runId: string): Promis
   try {
     handle = await open(lockPath, 'wx', 0o600);
   } catch {
-    let stale = false;
+    let stale: boolean;
     try {
       const current = JSON.parse(await readFile(lockPath, 'utf8')) as { pid?: number };
       stale = typeof current.pid === 'number' && !isProcessAlive(current.pid);

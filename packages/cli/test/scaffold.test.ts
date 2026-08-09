@@ -9,7 +9,12 @@ describe('project scaffold', () => {
   it('creates a strict, non-destructive Expo smoke workspace', async () => {
     const root = await mkdtemp(path.join(os.tmpdir(), 'mobileproof-scaffold-'));
     await writeFile(path.join(root, 'package.json'), JSON.stringify({ dependencies: { expo: '57.0.0' }, scripts: { lint: 'expo lint' } }));
-    await writeFile(path.join(root, 'app.json'), JSON.stringify({ expo: { android: { package: 'dev.mobileproof.fixture' } } }));
+    await writeFile(path.join(root, 'app.json'), JSON.stringify({
+      expo: {
+        ios: { bundleIdentifier: 'dev.mobileproof.fixture' },
+        android: { package: 'dev.mobileproof.fixture' },
+      },
+    }));
     await writeFile(path.join(root, 'package-lock.json'), '{}');
     await scaffoldProject({ root, readyId: 'screen.home.ready', dryRun: false, force: false });
     const config = parse(await readFile(path.join(root, 'mobileproof.yaml'), 'utf8')) as { checks: Array<{ id: string }>; app: { android: { id: string } } };
