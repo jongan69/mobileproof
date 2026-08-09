@@ -15,11 +15,12 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "pnpm build && pnpm typecheck && pnpm lint && pnpm test && pnpm docs:check && pnpm security:audit",
+    "check": "pnpm build && pnpm release:check && pnpm typecheck && pnpm lint && pnpm test && pnpm docs:check && pnpm security:audit",
     "docs:check": "node scripts/check-doc-links.mjs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "security:audit": "node scripts/check-audit.mjs",
+    "release:check": "node scripts/check-package-versions.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "clean": "pnpm -r --if-present clean"
