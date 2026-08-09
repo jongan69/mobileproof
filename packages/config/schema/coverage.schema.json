@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mobileproof.dev/schema/v1/coverage.schema.json",
+  "title": "MobileProof capability evidence contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "capabilities"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "capabilities": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "pattern": "^[a-zA-Z0-9._-]+$" },
+      "additionalProperties": { "$ref": "#/$defs/capability" }
+    }
+  },
+  "$defs": {
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["applicable"],
+      "properties": {
+        "applicable": { "type": "boolean" },
+        "releaseCritical": { "type": "boolean" },
+        "platforms": { "type": "array", "items": { "enum": ["ios", "android"] }, "minItems": 1, "uniqueItems": true },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type", "id"],
+            "properties": {
+              "type": { "enum": ["maestro", "check", "assertion", "manual"] },
+              "id": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "reason": { "type": "string", "minLength": 1 },
+        "owner": { "type": "string", "minLength": 1 },
+        "reviewAfter": { "type": "string", "format": "date" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "applicable": { "const": false } }, "required": ["applicable"] },
+          "then": {
+            "properties": { "reason": true, "owner": true, "reviewAfter": true },
+            "required": ["reason", "owner", "reviewAfter"]
+          },
+          "else": { "properties": { "evidence": true }, "required": ["evidence"] }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@mobileproof/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@mobileproof/config": "workspace:*",
+    "execa": "^9.6.1",
+    "fast-glob": "^3.3.3"
+  }
+}

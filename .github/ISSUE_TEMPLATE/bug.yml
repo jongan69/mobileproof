@@ -1,0 +1,15 @@
+name: Bug report
+description: Report a reproducible MobileProof defect
+body:
+  - type: textarea
+    attributes:
+      label: Reproduction
+      description: Include commands and a minimal project; do not include secrets or customer data.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Doctor output
+      description: Paste redacted `mobileproof doctor` output.
+    validations:
+      required: true

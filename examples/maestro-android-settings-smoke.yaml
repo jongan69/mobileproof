@@ -1,0 +1,7 @@
+appId: com.android.settings
+---
+- launchApp
+- extendedWaitUntil:
+    visible: Settings
+    timeout: 30000
+- takeScreenshot: android-settings-smoke

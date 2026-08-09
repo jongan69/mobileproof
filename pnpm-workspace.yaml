@@ -1,0 +1,11 @@
+packages:
+  - packages/*
+
+autoInstallPeers: false
+
+overrides:
+  vite: 6.4.3
+
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true

@@ -1,0 +1,35 @@
+{
+  "name": "mobileproof",
+  "version": "0.1.0",
+  "description": "Auditable local verification for React Native applications",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/jongan69/mobileproof.git" },
+  "publishConfig": { "access": "public", "provenance": true },
+  "type": "module",
+  "bin": {
+    "mobileproof": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "tsup --config tsup.config.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "commander": "^14.0.2",
+    "execa": "^9.6.1",
+    "fast-glob": "^3.3.3",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@mobileproof/config": "workspace:*",
+    "@mobileproof/core": "workspace:*"
+  }
+}

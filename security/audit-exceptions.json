@@ -1,0 +1,13 @@
+{
+  "exceptions": [
+    {
+      "advisory": "GHSA-g7r4-m6w7-qqqr",
+      "package": "esbuild",
+      "scope": "development",
+      "severity": "low",
+      "reason": "Current tsup and Vitest/Vite toolchains require esbuild 0.27.x; MobileProof does not expose their development servers to untrusted networks.",
+      "owner": "maintainers",
+      "expires": "2026-10-01"
+    }
+  ]
+}

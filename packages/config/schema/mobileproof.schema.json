@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mobileproof.dev/schema/v1/mobileproof.schema.json",
+  "title": "MobileProof configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "project", "app", "build", "devices", "suites"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspaceRoot", "appRoot"],
+      "properties": {
+        "workspaceRoot": { "type": "string", "minLength": 1 },
+        "appRoot": { "type": "string", "minLength": 1 },
+        "framework": { "enum": ["auto", "expo", "react-native"] },
+        "packageManager": { "enum": ["auto", "npm", "yarn", "pnpm", "bun"] }
+      }
+    },
+    "app": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ios": { "$ref": "#/$defs/appTarget" },
+        "android": { "$ref": "#/$defs/appTarget" }
+      },
+      "minProperties": 1
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/buildProfile" },
+      "minProperties": 1
+    },
+    "devices": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ios": { "$ref": "#/$defs/deviceTarget" },
+        "android": { "$ref": "#/$defs/deviceTarget" }
+      },
+      "minProperties": 1
+    },
+    "checks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/check" },
+      "default": []
+    },
+    "services": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/service" },
+      "default": []
+    },
+    "suites": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/suite" },
+      "minProperties": 1
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manifest"],
+      "properties": { "manifest": { "type": "string", "minLength": 1 } }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "directory": { "type": "string", "minLength": 1 },
+        "retentionDays": { "type": "integer", "minimum": 1, "maximum": 365 }
+      }
+    },
+    "redaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "secretsFromEnvironment": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" }, "uniqueItems": true },
+        "patterns": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+      }
+    },
+    "adapter": { "type": "string", "minLength": 1 }
+  },
+  "$defs": {
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["argv"],
+      "properties": {
+        "argv": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "cwd": { "type": "string" },
+        "env": { "type": "object", "additionalProperties": { "type": "string" } },
+        "timeoutMs": { "type": "integer", "minimum": 100, "maximum": 7200000 },
+        "allowFailure": { "type": "boolean" }
+      }
+    },
+    "appTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": { "id": { "type": "string", "minLength": 1 } }
+    },
+    "buildProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["strategy", "mode"],
+      "properties": {
+        "strategy": { "enum": ["auto", "expo-run", "eas-local", "native", "custom", "installed"] },
+        "mode": { "enum": ["debug", "release"] },
+        "isolation": { "enum": ["project", "clean-copy"] },
+        "command": { "$ref": "#/$defs/command" },
+        "artifact": { "type": "string" }
+      }
+    },
+    "deviceTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "selector"],
+      "properties": {
+        "type": { "enum": ["simulator", "emulator", "physical", "any"] },
+        "selector": { "type": "string", "minLength": 1 },
+        "create": { "type": "boolean" }
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "command"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-zA-Z0-9._-]+$" },
+        "command": { "$ref": "#/$defs/command" },
+        "suites": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "health": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "timeoutMs": { "type": "integer", "minimum": 100, "maximum": 300000 },
+        "intervalMs": { "type": "integer", "minimum": 50, "maximum": 30000 }
+      }
+    },
+    "service": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "start"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-zA-Z0-9._-]+$" },
+        "start": { "$ref": "#/$defs/command" },
+        "health": { "$ref": "#/$defs/health" },
+        "suites": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "flow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-zA-Z0-9._-]+$" },
+        "path": { "type": "string", "minLength": 1 },
+        "scenario": { "type": "string" },
+        "assertions": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "platforms": { "type": "array", "items": { "enum": ["ios", "android"] }, "minItems": 1, "uniqueItems": true },
+        "env": { "type": "object", "additionalProperties": { "type": "string" } },
+        "timeoutMs": { "type": "integer", "minimum": 1000, "maximum": 3600000 }
+      }
+    },
+    "suite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["buildProfile", "flows"],
+      "properties": {
+        "buildProfile": { "type": "string", "minLength": 1 },
+        "strict": { "type": "boolean" },
+        "platforms": { "type": "array", "items": { "enum": ["ios", "android"] }, "minItems": 1, "uniqueItems": true },
+        "flows": { "type": "array", "items": { "$ref": "#/$defs/flow" }, "minItems": 1 },
+        "checks": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+schemaVersion: 1
+project:
+  workspaceRoot: ..
+  appRoot: ..
+  framework: react-native
+  packageManager: pnpm
+app:
+  android:
+    id: com.android.settings
+build:
+  smoke:
+    strategy: installed
+    mode: release
+devices:
+  android:
+    type: physical
+    selector: connected-first
+suites:
+  smoke:
+    buildProfile: smoke
+    strict: false
+    platforms: [android]
+    flows:
+      - id: settings-launch
+        path: maestro-android-settings-smoke.yaml
+coverage:
+  manifest: settings-coverage.yaml
+artifacts:
+  directory: ../.mobileproof/settings-smoke
+  retentionDays: 7

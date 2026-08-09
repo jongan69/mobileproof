@@ -1,0 +1,7 @@
+appId: com.apple.Preferences
+---
+- launchApp
+- extendedWaitUntil:
+    visible: General
+    timeout: 30000
+- takeScreenshot: settings-smoke

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+.mobileproof/
+.mobileproof-package/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example

@@ -1,0 +1,9 @@
+schemaVersion: 1
+capabilities:
+  lifecycle.coldLaunch:
+    applicable: true
+    releaseCritical: true
+    platforms: [ios, android]
+    evidence:
+      - type: maestro
+        id: cold-launch

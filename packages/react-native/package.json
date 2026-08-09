@@ -1,0 +1,39 @@
+{
+  "name": "mobileproof-react-native",
+  "version": "0.1.0",
+  "description": "Safe readiness markers and stable identifiers for MobileProof",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/jongan69/mobileproof.git" },
+  "publishConfig": { "access": "public", "provenance": true },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "react-native": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.tsx",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["src", "dist", "README.md"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src/index.tsx --format esm,cjs --dts --clean --external react --external react-native",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": ">=0.72"
+  },
+  "peerDependenciesMeta": {
+    "react-native": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "react": "19.2.3"
+  }
+}

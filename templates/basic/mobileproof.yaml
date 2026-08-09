@@ -1,0 +1,36 @@
+schemaVersion: 1
+project:
+  workspaceRoot: .
+  appRoot: .
+  framework: auto
+  packageManager: auto
+app:
+  ios:
+    id: dev.example.app.e2e
+  android:
+    id: dev.example.app.e2e
+build:
+  smoke:
+    strategy: expo-run
+    mode: debug
+    isolation: project
+devices:
+  ios:
+    type: simulator
+    selector: booted-or-create
+  android:
+    type: any
+    selector: connected-first
+suites:
+  smoke:
+    buildProfile: smoke
+    strict: false
+    platforms: [ios, android]
+    flows:
+      - id: cold-launch
+        path: flows/cold-launch.yaml
+coverage:
+  manifest: coverage.yaml
+artifacts:
+  directory: .mobileproof/artifacts
+  retentionDays: 14

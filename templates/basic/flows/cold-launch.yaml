@@ -1,0 +1,16 @@
+appId: ${APP_ID}
+tags:
+  - smoke
+---
+- launchApp:
+    permissions:
+      all: deny
+- extendedWaitUntil:
+    visible:
+      id: app.ready
+    timeout: 30000
+- takeScreenshot: cold-launch
+- stopApp
+- launchApp
+- assertVisible:
+    id: app.ready

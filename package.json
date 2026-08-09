@@ -1,0 +1,48 @@
+{
+  "name": "mobileproof-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Auditable local smoke and capability verification for React Native applications.",
+  "license": "MIT",
+  "packageManager": "pnpm@11.18.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "pnpm -r --if-present build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "pnpm build && pnpm typecheck && pnpm lint && pnpm test && pnpm docs:check && pnpm security:audit",
+    "docs:check": "node scripts/check-doc-links.mjs",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "security:audit": "node scripts/check-audit.mjs",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "clean": "pnpm -r --if-present clean"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@changesets/cli": "^2.29.8",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-import-x": "^4.16.1",
+    "fast-glob": "^3.3.3",
+    "search-insights": "2.17.3",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1",
+    "vitepress": "^1.6.4",
+    "vitest": "^4.0.15"
+  },
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "keywords": [],
+  "author": ""
+}

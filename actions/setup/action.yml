@@ -1,0 +1,20 @@
+name: Setup MobileProof
+description: Configure Node and pnpm for a MobileProof repository
+inputs:
+  node-version:
+    description: Node.js version
+    default: '22'
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      with:
+        node-version: ${{ inputs.node-version }}
+    - name: Enable package manager
+      shell: bash
+      run: |
+        corepack enable
+        corepack install
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile

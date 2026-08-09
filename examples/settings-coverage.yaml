@@ -1,0 +1,9 @@
+schemaVersion: 1
+capabilities:
+  lifecycle.launch:
+    applicable: true
+    releaseCritical: true
+    platforms: [android]
+    evidence:
+      - type: maestro
+        id: settings-launch
