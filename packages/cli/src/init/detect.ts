@@ -45,10 +45,10 @@ export async function detectProject(root: string): Promise<DetectedProject> {
   if (framework === 'expo' && (!ids.iosId || !ids.androidId)) {
     const runner = packageManager === 'pnpm' ? ['pnpm', 'exec', 'expo']
       : packageManager === 'yarn' ? ['yarn', 'expo']
-        : packageManager === 'bun' ? ['bunx', 'expo'] : ['npx', 'expo'];
+        : packageManager === 'bun' ? ['bunx', 'expo'] : ['npx', '--no-install', 'expo'];
     const [command, ...args] = [...runner, 'config', '--json'];
     if (command) {
-      const result = await execa(command, args, { cwd: absolute, reject: false });
+      const result = await execa(command, args, { cwd: absolute, reject: false, timeout: 10_000 });
       if (result.exitCode === 0) ids = { ...ids, ...appIds(JSON.parse(result.stdout)) };
     }
   }
