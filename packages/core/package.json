@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@mobileproof/config": "workspace:*",
-    "execa": "^10.0.1",
+    "execa": "^10.1.0",
     "fast-glob": "^3.3.3"
   }
 }
