@@ -32,7 +32,7 @@ jobs:
       - uses: ./actions/setup
       - run: pnpm build
       - run: mkdir -p .mobileproof-package && pnpm --filter mobileproof pack --pack-destination .mobileproof-package
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: mobileproof-package
           path: .mobileproof-package/*.tgz
